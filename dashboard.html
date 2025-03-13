@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Tracker - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="add-transaction.html">Add Transaction</a> | 
+        <a href="dashboard.html">Dashboard</a> | 
+        <a href="history.html">History</a> | 
+        <a href="wallets.html">Wallets</a> | 
+        <a href="cash-invested.html">Cash Invested</a> | 
+        <a href="crypto-inventory.html">Crypto Inventory</a>
+    </nav>
+    <h1>Crypto Tracker</h1>
+
+    <section id="dashboard">
+        <h2>Holdings</h2>
+        <h2 class="table-label">Summary</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Total Invested Cash</th>
+                    <th>Total Open Amount</th>
+                    <th>Total Closed Amount</th>
+                    <th>Total P/L</th>
+                </tr>
+            </thead>
+            <tbody id="summaryTable"></tbody>
+        </table>
+        <h2 class="table-label">Open Positions <span class="table-controls"><button onclick="refreshPrices()">Refresh Prices</button></span></h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Crypto</th>
+                    <th>Quantity</th>
+                    <th>Avg. Buy Price</th>
+                    <th>Current Price</th>
+                    <th>Cost</th>
+                    <th>Value</th>
+                    <th>Unrealized P/L</th>
+                    <th>Closed P/L</th>
+                    <th>Wallet</th>
+                </tr>
+            </thead>
+            <tbody id="openHoldingsTable"></tbody>
+        </table>
+        <h2 class="table-label">Closed Positions <span class="table-controls"><button id="toggleClosedPositions" onclick="toggleClosedPositions()">Expand Closed Positions</button></span></h2>
+        <table id="closedPositionsTable">
+            <thead>
+                <tr>
+                    <th>Logo</th>
+                    <th>Crypto</th>
+                    <th>Quantity</th>
+                    <th>Avg Buy Price</th>
+                    <th>Cost</th>
+                    <th>Total Sold</th>
+                    <th>Closed P/L</th>
+                    <th>Wallet</th>
+                </tr>
+            </thead>
+            <tbody id="closedHoldingsTable"></tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

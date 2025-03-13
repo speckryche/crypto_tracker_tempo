@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Tracker - Add Transaction</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="add-transaction.html">Add Transaction</a> | 
+        <a href="dashboard.html">Dashboard</a> | 
+        <a href="history.html">History</a> | 
+        <a href="wallets.html">Wallets</a> | 
+        <a href="cash-invested.html">Cash Invested</a> | 
+        <a href="crypto-inventory.html">Crypto Inventory</a>
+    </nav>
+    <h1>Crypto Tracker</h1>
+
+    <section id="add-transaction">
+        <h2>Add Transaction</h2>
+
+        <form id="transaction-form">
+            <select id="transactionType" onchange="toggleFields()">
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+                <option value="transfer">Transfer</option>
+            </select>
+            <input type="date" id="transactionDate" required>
+            <div style="display: flex; gap: 15px;">
+                <input type="text" id="cryptoName" placeholder="Ticker (e.g., BTC)" style="display: none;" oninput="checkAndAddCrypto()">
+                <input type="text" id="cryptoFullName" placeholder="Name (e.g., Bitcoin)" style="display: none;">
+            </div>
+            <input type="text" id="apiId" placeholder="API ID" style="display: none;">
+            <select id="exchangeFrom" style="display: none;">
+                <option value="">Select Exchange</option>
+                <option value="BullX">BullX</option>
+                <option value="Bybit">Bybit</option>
+                <option value="Coinbase">Coinbase</option>
+                <option value="Dexcelerate">Dexcelerate</option>
+                <option value="Mexc">Mexc</option>
+            </select>
+            <input type="text" id="exchangeTo" placeholder="Exchange To" style="display: none;">
+            <input type="number" id="quantity" placeholder="Quantity" step="0.0001" style="display: none;">
+            <div id="priceMethodGroup" style="display: none;">
+                <label><input type="radio" name="priceMethod" value="price" checked onchange="togglePriceFields()"> Price per Unit (USD)</label>
+                <label><input type="radio" name="priceMethod" value="marketCap" onchange="togglePriceFields()"> Market Cap (USD)</label>
+            </div>
+            <input type="number" id="price" placeholder="Price per Unit (USD)" step="0.01" style="display: none;">
+            <input type="number" id="marketCap" placeholder="Market Cap (USD)" step="0.01" style="display: none;">
+            <input type="text" id="walletAddress" placeholder="Wallet Address" style="display: none;">
+            <button type="button" id="addTransactionBtn" onclick="addTransaction()" style="display: inline-block;">Add Transaction</button>
+            <div id="cryptoAddPrompt" style="display: none; padding: 15px 0;">
+                <p>Crypto not found. Add it?</p>
+                <div style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px;">
+                    <input type="text" id="newCryptoName" placeholder="Ticker (e.g., BTC)" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                    <input type="text" id="newCryptoFullName" placeholder="Name (e.g., Bitcoin)" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                    <input type="text" id="newApiId" placeholder="API ID" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                    <select id="newCategory" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                        <option value="">Select Category</option>
+                        <option value="AI / AI Agents">AI / AI Agents</option>
+                        <option value="DEX">DEX</option>
+                        <option value="Finance">Finance</option>
+                        <option value="Gaming">Gaming</option>
+                        <option value="Layer 1 / 2">Layer 1 / 2</option>
+                        <option value="Meme Coin">Meme Coin</option>
+                        <option value="RWA / DPIN">RWA / DPIN</option>
+                    </select>
+                </div>
+                <div style="display: flex; justify-content: center; gap: 10px;">
+                    <button onclick="addNewCrypto()" style="padding: 4.8px 8px; font-size: 9.6px; font-weight: bold; border: none; border-radius: 6px; background: linear-gradient(135deg, #1e90ff, #00bfff); color: #ffffff; cursor: pointer; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; width: 60px;">Add</button>
+                    <button onclick="cancelAddCrypto()" style="padding: 4.8px 8px; font-size: 9.6px; font-weight: bold; border: none; border-radius: 6px; background: linear-gradient(135deg, #ff0000, #ff3333); color: #ffffff; cursor: pointer; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; width: 60px;">Cancel</button>
+                </div>
+            </div>
+        </form>
+
+        <section id="import-section">
+            <h2>Import Transactions</h2>
+            <input type="file" id="importFile" accept=".csv">
+            <button onclick="importTransactions()">Import</button>
+        </section>
+
+        <script>
+            function toggleFields() {
+                const type = document.getElementById("transactionType").value;
+                const fields = {
+                    cryptoName: document.getElementById("cryptoName"),
+                    cryptoFullName: document.getElementById("cryptoFullName"),
+                    apiId: document.getElementById("apiId"),
+                    exchangeFrom: document.getElementById("exchangeFrom"),
+                    exchangeTo: document.getElementById("exchangeTo"),
+                    quantity: document.getElementById("quantity"),
+                    priceMethodGroup: document.getElementById("priceMethodGroup"),
+                    price: document.getElementById("price"),
+                    marketCap: document.getElementById("marketCap"),
+                    walletAddress: document.getElementById("walletAddress")
+                };
+
+                Object.values(fields).forEach(field => field.style.display = "none");
+                fields.cryptoName.required = false;
+                fields.cryptoFullName.required = false;
+                fields.apiId.required = false;
+                fields.exchangeFrom.required = false;
+                fields.exchangeTo.required = false;
+                fields.quantity.required = false;
+                fields.price.required = false;
+                fields.marketCap.required = false;
+                fields.walletAddress.required = false;
+
+                if (type === "buy") {
+                    fields.cryptoName.style.display = "inline-block";
+                    fields.cryptoFullName.style.display = "inline-block";
+                    fields.apiId.style.display = "block";
+                    fields.exchangeFrom.style.display = "block";
+                    fields.quantity.style.display = "block";
+                    fields.priceMethodGroup.style.display = "block";
+                    fields.walletAddress.style.display = "block";
+                    fields.cryptoName.required = true;
+                    fields.cryptoFullName.required = true;
+                    fields.quantity.required = true;
+                    fields.walletAddress.required = true;
+                    togglePriceFields();
+                } else if (type === "sell") {
+                    fields.cryptoName.style.display = "inline-block";
+                    fields.cryptoFullName.style.display = "inline-block";
+                    fields.apiId.style.display = "block";
+                    fields.exchangeFrom.style.display = "block";
+                    fields.quantity.style.display = "block";
+                    fields.price.style.display = "block";
+                    fields.walletAddress.style.display = "block";
+                    fields.cryptoName.required = true;
+                    fields.cryptoFullName.required = true;
+                    fields.quantity.required = true;
+                    fields.price.required = true;
+                    fields.walletAddress.required = true;
+                } else if (type === "transfer") {
+                    fields.cryptoName.style.display = "inline-block";
+                    fields.cryptoFullName.style.display = "inline-block";
+                    fields.apiId.style.display = "block";
+                    fields.exchangeFrom.style.display = "block";
+                    fields.exchangeTo.style.display = "block";
+                    fields.quantity.style.display = "block";
+                    fields.walletAddress.style.display = "block";
+                    fields.cryptoName.required = true;
+                    fields.cryptoFullName.required = true;
+                    fields.quantity.required = true;
+                    fields.walletAddress.required = true;
+                }
+            }
+
+            function togglePriceFields() {
+                const priceMethod = document.querySelector('input[name="priceMethod"]:checked').value;
+                const priceField = document.getElementById("price");
+                const marketCapField = document.getElementById("marketCap");
+
+                priceField.style.display = priceMethod === "price" ? "block" : "none";
+                marketCapField.style.display = priceMethod === "marketCap" ? "block" : "none";
+                priceField.required = priceMethod === "price";
+                marketCapField.required = priceMethod === "marketCap";
+            }
+
+            toggleFields();
+        </script>
+        <script src="script.js"></script>
+    </section>
+</body>
+</html>

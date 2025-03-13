@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Tracker - Crypto Inventory</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav>
+        <a href="add-transaction.html">Add Transaction</a> | 
+        <a href="dashboard.html">Dashboard</a> | 
+        <a href="history.html">History</a> | 
+        <a href="wallets.html">Wallets</a> | 
+        <a href="cash-invested.html">Cash Invested</a> | 
+        <a href="crypto-inventory.html">Crypto Inventory</a>
+    </nav>
+    <h1>Crypto Inventory</h1>
+    <section>
+        <h2>Add New Crypto</h2>
+        <form id="addCryptoForm" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 600px; margin: 0 auto;">
+            <input type="text" id="newTicker" placeholder="Ticker (e.g., BTC)" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+            <input type="text" id="newName" placeholder="Name (e.g., Bitcoin)" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+            <select id="newCategory" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                <option value="">Select Category</option>
+                <option value="AI / AI Agents">AI / AI Agents</option>
+                <option value="DEX">DEX</option>
+                <option value="Finance">Finance</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Layer 1 / 2">Layer 1 / 2</option>
+                <option value="Meme Coin">Meme Coin</option>
+                <option value="RWA / DPIN">RWA / DPIN</option>
+            </select>
+            <input type="text" id="newApiId" placeholder="API ID (e.g., bitcoin)" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+            <div style="grid-column: span 2; display: flex; justify-content: flex-start; gap: 10px;">
+                <button type="button" onclick="addCryptoToInventory()" style="padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; background: linear-gradient(135deg, #1e90ff, #00bfff); color: #ffffff; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; flex: 1;">Add</button>
+            </div>
+        </form>
+        <h2>Tracked Cryptos</h2>
+        <table id="cryptoTable">
+            <thead>
+                <tr>
+                    <th>Crypto Ticker</th>
+                    <th>Crypto Name</th>
+                    <th>API ID</th>
+                    <th>Category</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+    <script src="script.js"></script>
+</body>
+</html>

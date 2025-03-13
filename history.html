@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Tracker - Transaction History</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .crypto-group {
+            margin-bottom: 15px;
+        }
+        .crypto-header {
+            background: linear-gradient(135deg, #333333, #444444);
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 18px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        .crypto-header:hover {
+            background: linear-gradient(135deg, #444444, #555555);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .crypto-header .crypto-ticker {
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 4px rgba(30, 144, 255, 0.8);
+            margin-right: 10px;
+        }
+        .crypto-details {
+            display: none;
+            background-color: #222222;
+            border-radius: 0 0 6px 6px;
+        }
+        .crypto-details table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            box-shadow: none;
+        }
+        .crypto-details th, .crypto-details td {
+            padding: 8px;
+            border: 1px solid #444444;
+        }
+        .crypto-details th {
+            background: linear-gradient(135deg, #222222, #333333);
+        }
+        #transaction-history #viewToggle {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            border: none;
+            border-radius: 6px;
+            background: linear-gradient(135deg, #1e90ff, #00bfff) !important;
+            color: #ffffff !important;
+            cursor: pointer;
+            margin: 10px 0 20px 0;
+            transition: all 0.3s ease;
+        }
+        #transaction-history #viewToggle:hover {
+            background: linear-gradient(135deg, #00bfff, #1e90ff) !important;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="add-transaction.html">Add Transaction</a> | 
+        <a href="dashboard.html">Dashboard</a> | 
+        <a href="history.html">History</a> | 
+        <a href="wallets.html">Wallets</a> | 
+        <a href="cash-invested.html">Cash Invested</a> | 
+        <a href="crypto-inventory.html">Crypto Inventory</a>
+    </nav>
+    <h1>Crypto Tracker</h1>
+
+    <section id="transaction-history">
+        <h2>Transaction History</h2>
+        <button id="viewToggle">Switch to Grouped View</button>
+        <div id="historyContainer"></div>
+
+        <form id="editTransactionForm" style="display: none; margin-top: 20px;">
+            <h3>Edit Transaction</h3>
+            <input type="date" id="editDate">
+            <select id="editType" onchange="toggleEditFields()">
+                <option value="buy">Buy</option>
+                <option value="sell">Sell</option>
+                <option value="transfer">Transfer</option>
+            </select>
+            <input type="text" id="editExchangeFrom" placeholder="Exchange (buy)">
+            <input type="text" id="editCrypto" placeholder="Crypto">
+            <input type="text" id="editCryptoFullName" placeholder="Name">
+            <input type="text" id="editApiId" placeholder="API ID">
+            <input type="number" id="editAmount" placeholder="Quantity" step="0.0001">
+            <input type="number" id="editPrice" placeholder="Price per unit (USD)" step="0.01">
+            <input type="text" id="editExchangeTo" placeholder="Exchange To">
+            <input type="text" id="editWalletAddress" placeholder="Wallet Address">
+            <input type="hidden" id="editIndex">
+            <button type="button" onclick="saveEditedTransaction()">Save</button>
+            <button type="button" onclick="cancelEdit()">Cancel</button>
+        </form>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        renderTransactionHistory(); // Ensure initial render
+        document.getElementById("viewToggle").addEventListener("click", toggleHistoryView);
+
+        function toggleEditFields() {
+            const type = document.getElementById("editType").value;
+            const exchangeFromField = document.getElementById("editExchangeFrom");
+            const exchangeToField = document.getElementById("editExchangeTo");
+            exchangeFromField.style.display = type === "buy" ? "block" : "none";
+            exchangeToField.style.display = type === "transfer" ? "block" : "none";
+        }
+        document.getElementById("editType").addEventListener("change", toggleEditFields);
+    </script>
+</body>
+</html>

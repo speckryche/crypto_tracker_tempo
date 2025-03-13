@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Crypto Tracker - Wallets</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .editable {
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #000;
+        }
+        .edit-mode td {
+            background-color: #f0f0f0;
+        }
+        .action-buttons {
+            display: none;
+        }
+        .edit-mode .action-buttons {
+            display: inline-block;
+        }
+        button.save-btn, button.cancel-btn {
+            padding: 5px 10px;
+            margin: 0 5px;
+            font-size: 14px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button.save-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        button.cancel-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .fields {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="add-transaction.html">Add Transaction</a> | 
+        <a href="dashboard.html">Dashboard</a> | 
+        <a href="history.html">History</a> | 
+        <a href="wallets.html">Wallets</a> | 
+        <a href="cash-invested.html">Cash Invested</a> | 
+        <a href="crypto-inventory.html">Crypto Inventory</a>
+    </nav>
+    <h1>Wallets</h1>
+
+    <section>
+        <h2>Add New Wallet</h2>
+        <form id="addWalletForm" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; max-width: 600px; margin: 0 auto;">
+            <select id="walletType" onchange="toggleWalletFields()" required style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;">
+                <option value="">Select Wallet Type</option>
+                <option value="my">My Wallet</option>
+                <option value="tracking">Tracking Wallet</option>
+            </select>
+            <div id="myWalletFields" class="fields">
+                <input type="text" id="newWalletName" placeholder="Wallet Name (e.g., Main Wallet)" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <input type="text" id="newWalletAddress" placeholder="Wallet Address" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <select id="newMyWallet" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                    <option value="">Is it My Wallet?</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+                <select id="newBrowser" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                    <option value="">Select Browser</option>
+                    <option value="any">Any</option>
+                    <option value="brave">Brave</option>
+                    <option value="chrome">Chrome</option>
+                    <option value="firefox">Firefox</option>
+                    <option value="safari">Safari</option>
+                    <option value="telegram">Telegram</option>
+                </select>
+                <input type="text" id="newPlatform" placeholder="Platform (e.g., Coinbase)" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <input type="text" id="newWalletNotes" placeholder="Notes" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box; grid-column: span 2;">
+            </div>
+            <div id="trackingWalletFields" class="fields">
+                <input type="text" id="newWalletAddressTracking" placeholder="Wallet Address" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <input type="text" id="newOwner" placeholder="Owner" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <input type="text" id="newChain" placeholder="Chain" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box;" required>
+                <input type="text" id="newWalletNotesTracking" placeholder="Notes" style="padding: 12px; font-size: 16px; border: none; border-radius: 8px; background-color: #333333; color: #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); width: 100%; box-sizing: border-box; grid-column: span 2;">
+            </div>
+            <div style="grid-column: span 2; display: flex; justify-content: flex-start; gap: 10px;">
+                <button type="button" onclick="addWallet()" style="padding: 12px; font-size: 16px; font-weight: bold; border: none; border-radius: 8px; background: linear-gradient(135deg, #1e90ff, #00bfff); color: #ffffff; cursor: pointer; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); transition: all 0.3s ease; flex: 1;">Add</button>
+            </div>
+        </form>
+
+        <h2>My Wallets</h2>
+        <table id="myWalletsTable">
+            <thead>
+                <tr>
+                    <th>Wallet Name</th>
+                    <th>Wallet Address</th>
+                    <th>My Wallet</th>
+                    <th>Browser</th>
+                    <th>Platform</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+        <h2>Wallet Tracking</h2>
+        <table id="walletTrackingTable">
+            <thead>
+                <tr>
+                    <th>Wallet Address</th>
+                    <th>Owner</th>
+                    <th>Chain</th>
+                    <th>Notes</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

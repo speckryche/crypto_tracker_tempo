@@ -1,0 +1,473 @@
+body {
+    font-family: 'Arial', sans-serif;
+    max-width: 1000px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background-color: #000000;
+    color: #ffffff;
+}
+
+h1, h2 {
+    text-align: center;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.table-label {
+    text-align: left;
+    margin-bottom: 5px; /* Reduced to bring labels close to tables */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav {
+    text-align: center;
+    margin-bottom: 20px;
+    padding: 10px 0;
+    background: linear-gradient(135deg, #1a1a1a, #222222);
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-radius: 6px;
+    background: transparent;
+    transition: all 0.3s ease;
+    display: inline-block;
+    position: relative;
+}
+
+nav a:hover {
+    color: #00bfff;
+    text-decoration: underline;
+}
+
+nav a:active {
+    transform: scale(0.98);
+}
+
+#transaction-form {
+    margin-bottom: 20px;
+    background-color: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#investment-form-data {
+    margin-bottom: 20px;
+    background-color: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    grid-auto-flow: row dense;
+    grid-template-areas:
+        "date exchange"
+        "amount source"
+        "notes notes"
+        "button button";
+}
+
+#investment-form-data label[for="investmentDate"] { grid-area: date; }
+#investment-form-data #investmentDate { grid-area: date; }
+#investment-form-data label[for="investmentExchange"] { grid-area: exchange; }
+#investment-form-data #investmentExchange { grid-area: exchange; }
+#investment-form-data label[for="investmentAmount"] { grid-area: amount; }
+#investment-form-data #investmentAmount { grid-area: amount; }
+#investment-form-data label[for="investmentSource"] { grid-area: source; }
+#investment-form-data #investmentSource { grid-area: source; }
+#investment-form-data label[for="investmentNotes"] { grid-area: notes; }
+#investment-form-data #investmentNotes { grid-area: notes; }
+#investment-form-data button { grid-area: button; }
+
+#transaction-form input,
+#transaction-form select,
+#investment-form-data input,
+#investment-form-data select,
+#investment-form-data textarea {
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #333333;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#transaction-form input:focus,
+#transaction-form select:focus,
+#investment-form-data input:focus,
+#investment-form-data select:focus,
+#investment-form-data textarea:focus {
+    outline: none;
+    background-color: #444444;
+    box-shadow: 0 0 8px rgba(30, 144, 255, 0.5);
+    text-align: center;
+}
+
+#transaction-form button,
+#investment-form-data button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 200px;
+}
+
+#transaction-form button:hover,
+#investment-form-data button:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom Radio Buttons */
+#priceMethodGroup {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    background-color: #333333;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#priceMethodGroup label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: #ffffff;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#priceMethodGroup input[type="radio"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background-color: #555555;
+    border-radius: 50%;
+    border: 2px solid #1e90ff;
+    margin-right: 8px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#priceMethodGroup input[type="radio"]:checked {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    box-shadow: 0 0 6px rgba(30, 144, 255, 0.5);
+}
+
+#priceMethodGroup input[type="radio"]:checked::after {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#priceMethodGroup input[type="radio"]:hover:not(:checked) {
+    background-color: #666666;
+}
+
+#priceMethodGroup label:hover {
+    color: #00bfff;
+}
+
+#wallet-form, #editTransactionForm {
+    margin-bottom: 20px;
+    background-color: #1a1a1a;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#wallet-form input, #wallet-form select, #wallet-form button,
+#editTransactionForm input, #editTransactionForm select, #editTransactionForm button {
+    margin: 0;
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    background-color: #333333;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#wallet-form button, #editTransactionForm button {
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    color: #ffffff;
+    cursor: pointer;
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: 200px;
+}
+
+#wallet-form button:hover, #editTransactionForm button:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff);
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+#wallet-form input:focus, #editTransactionForm input:focus,
+#wallet-form select:focus, #editTransactionForm select:focus {
+    background-color: #444444;
+    box-shadow: 0 0 8px rgba(30, 144, 255, 0.5);
+}
+
+/* Match 'Refresh Prices' and 'Collapse/Expand Closed Positions' buttons to app style */
+#dashboard .table-controls button {
+    padding: 5px 20px !important; /* Reduced top padding to minimize gap */
+    font-size: 16px !important;
+    font-weight: bold !important;
+    border: none !important;
+    border-radius: 8px !important;
+    background: linear-gradient(135deg, #1e90ff, #00bfff) !important; /* Match app's blue gradient */
+    color: #ffffff !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+    transition: all 0.3s ease !important;
+    margin: 0 !important;
+    display: inline-block !important;
+    vertical-align: top !important;
+}
+
+#dashboard .table-controls button:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff) !important;
+    transform: scale(1.05) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Adjust gap above buttons and labels to be minimal */
+.table-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0 0 5px 0; /* Reduced from 15px to 5px to bring closer */
+    padding-top: 0; /* Explicitly remove any inherited padding */
+    align-items: flex-start; /* Ensure no extra baseline spacing */
+}
+
+.refresh-container {
+    /* No additional styling needed, handled by .table-controls */
+}
+
+/* Ensure tables have no top margin and double the gap between tables */
+table {
+    margin-top: 0; /* Override any default or inherited top margin */
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); /* Further reduced shadow to minimize gap */
+    overflow: hidden;
+    margin-bottom: 30px; /* Doubled from 15px to 30px for all tables */
+}
+
+/* Remove specific rule since general rule now handles doubling */
+table:nth-child(2) {
+    /* No longer needed, removed to avoid conflict */
+}
+
+#transaction-history td:nth-child(9) {
+    white-space: nowrap;
+    padding: 8px;
+}
+
+#transaction-history button {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(135deg, #1e90ff, #00bfff);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0 2px;
+    display: inline-block;
+    min-width: 54px;
+}
+
+#transaction-history button:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff);
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+#transaction-history button:nth-child(2) {
+    background: linear-gradient(135deg, #ff0000, #ff3333);
+}
+
+#transaction-history button:nth-child(2):hover {
+    background: linear-gradient(135deg, #ff3333, #ff0000);
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    color: #ffffff;
+    border: 1px solid #444444;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+th {
+    background: linear-gradient(135deg, #222222, #333333);
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+td {
+    background-color: #222222;
+}
+
+tr:hover td {
+    background-color: #333333;
+}
+
+th:first-child {
+    border-top-left-radius: 10px;
+}
+
+th:last-child {
+    border-top-right-radius: 10px;
+}
+
+tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+
+tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+img {
+    width: 24px;
+    height: 24px;
+}
+
+.profit {
+    color: #00ff00;
+}
+
+.loss {
+    color: #ff0000;
+}
+
+#import-section {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#import-section input[type="file"] {
+    padding: 10px;
+    background-color: #333333;
+    color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    width: 250px;
+    margin-right: 10px;
+}
+
+#import-section button {
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    background: #d3d3d3; /* Light grey color */
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+#import-section button:hover {
+    background: #c0c0c0; /* Slightly darker grey on hover */
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.edit-btn, .delete-btn {
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    margin: 0 2px;
+    display: inline-block;
+    min-width: 54px;
+}
+
+.edit-btn {
+    background: linear-gradient(135deg, #1e90ff, #00bfff); /* Blue */
+}
+
+.edit-btn:hover {
+    background: linear-gradient(135deg, #00bfff, #1e90ff);
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.delete-btn {
+    background: linear-gradient(135deg, #ff0000, #ff3333); /* Red */
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #ff3333, #ff0000);
+    transform: scale(1.05);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
